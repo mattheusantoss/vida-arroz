@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}{{ title }}{% endblock %} - Vida Arroz | O sabor que nasce na terra</title>
+    <meta name="description" content="{% block description %}Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.{% endblock %}">
+    <meta name="keywords" content="arroz, vida arroz, arroz sustentável, arroz premium, agricultura sustentável, arroz brasileiro">
+    <meta name="author" content="Vida Arroz">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{% block og_url %}https://vidaarroz.com.br/{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Vida Arroz - O sabor que nasce na terra{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/og-image.jpg') }}{% endblock %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{% block twitter_url %}https://vidaarroz.com.br/{% endblock %}">
+    <meta property="twitter:title" content="{% block twitter_title %}Vida Arroz - O sabor que nasce na terra{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/twitter-image.jpg') }}{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+    <!-- Google Fonts - Lexend -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <img src="{{ url_for('static', filename='images/vida-arroz-logo.svg') }}" alt="Vida Arroz" class="logo-img">
+                </a>
+                <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('quem_somos') }}">Quem somos</a></li>
+                    <li class="dropdown">
+                        <a href="{{ url_for('index') }}#produtos" class="dropdown-toggle">Produtos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('sustentavel') }}">Sustentável</a></li>
+                            <li><a href="{{ url_for('classico') }}">Clássico</a></li>
+                            <li><a href="{{ url_for('gold') }}">Gold</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url_for('contato') }}">Fale conosco</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Botão flutuante WhatsApp -->
+    <button type="button" id="btn-whatsapp-float" class="fixed bottom-6 right-6 z-[90] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:bg-[#20BD5A] hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[#25D366]/50" aria-label="Abrir formulário de contato WhatsApp">
+        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.865 9.865 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </button>
+
+    <!-- Modal formulário WhatsApp (estilo chat) -->
+    <div id="modal-whatsapp" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-hidden="true" aria-labelledby="modal-whatsapp-title">
+        <div class="flex min-h-full items-end justify-end p-4 sm:items-center sm:justify-center">
+            <div id="modal-whatsapp-backdrop" class="fixed inset-0 bg-black/40" aria-hidden="true"></div>
+            <div class="relative w-full max-w-sm rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl sm:max-w-md">
+                <!-- Cabeçalho estilo WhatsApp -->
+                <div class="flex items-center gap-3 rounded-t-2xl bg-[#075E54] px-4 py-3 text-white sm:rounded-t-2xl">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.865 9.865 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <h2 id="modal-whatsapp-title" class="font-semibold">Vida Arroz</h2>
+                        <p class="text-xs text-white/90">Envie sua mensagem, retornamos em breve.</p>
+                    </div>
+                    <button type="button" id="modal-whatsapp-close" class="rounded-full p-2 text-white/90 hover:bg-white/10 hover:text-white" aria-label="Fechar">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <!-- Formulário -->
+                <form id="form-whatsapp" class="p-4 space-y-4">
+                    <input type="hidden" name="origem" value="whatsapp">
+                    <div>
+                        <label for="wa-nome" class="mb-1 block text-sm font-medium text-gray-700">Nome</label>
+                        <input type="text" id="wa-nome" name="nome" required placeholder="Seu nome" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 placeholder-gray-500 focus:border-[#075E54] focus:outline-none focus:ring-2 focus:ring-[#075E54]/30">
+                    </div>
+                    <div>
+                        <label for="wa-telefone" class="mb-1 block text-sm font-medium text-gray-700">Telefone (WhatsApp)</label>
+                        <input type="tel" id="wa-telefone" name="telefone" required placeholder="(51) 99999-9999" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 placeholder-gray-500 focus:border-[#075E54] focus:outline-none focus:ring-2 focus:ring-[#075E54]/30">
+                    </div>
+                    <div>
+                        <label for="wa-email" class="mb-1 block text-sm font-medium text-gray-700">E-mail</label>
+                        <input type="email" id="wa-email" name="email" required placeholder="seu@email.com" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 placeholder-gray-500 focus:border-[#075E54] focus:outline-none focus:ring-2 focus:ring-[#075E54]/30">
+                    </div>
+                    <div>
+                        <label for="wa-mensagem" class="mb-1 block text-sm font-medium text-gray-700">Mensagem</label>
+                        <textarea id="wa-mensagem" name="mensagem" rows="3" placeholder="Como podemos ajudar?" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 placeholder-gray-500 focus:border-[#075E54] focus:outline-none focus:ring-2 focus:ring-[#075E54]/30"></textarea>
+                    </div>
+                    <button type="submit" class="w-full rounded-lg bg-[#25D366] px-4 py-3 font-semibold text-white shadow hover:bg-[#20BD5A] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2">Enviar mensagem</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Fale Conosco (Tailwind) -->
+    <div id="modal-fale-conosco" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-hidden="true" aria-labelledby="modal-fale-conosco-title">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div id="modal-fale-conosco-backdrop" class="fixed inset-0 bg-black/50 transition-opacity" aria-hidden="true"></div>
+            <div class="relative w-full max-w-md rounded-xl bg-white shadow-xl">
+                <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+                    <h2 id="modal-fale-conosco-title" class="text-xl font-semibold text-gray-900">Fale conosco</h2>
+                    <button type="button" id="modal-fale-conosco-close" class="rounded-lg p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700" aria-label="Fechar">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <form id="form-fale-conosco" class="p-6 space-y-4">
+                    <div>
+                        <label for="fale-nome" class="mb-1 block text-sm font-medium text-gray-700">Nome</label>
+                        <input type="text" id="fale-nome" name="nome" required placeholder="Seu nome completo"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                    </div>
+                    <div>
+                        <label for="fale-telefone" class="mb-1 block text-sm font-medium text-gray-700">Telefone</label>
+                        <input type="tel" id="fale-telefone" name="telefone" required placeholder="(00) 00000-0000"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                    </div>
+                    <div>
+                        <label for="fale-email" class="mb-1 block text-sm font-medium text-gray-700">E-mail</label>
+                        <input type="email" id="fale-email" name="email" required placeholder="seu@email.com"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                    </div>
+                    <div class="flex gap-3 pt-2">
+                        <button type="submit" class="flex-1 rounded-lg bg-[#BF0006] px-4 py-2.5 font-semibold text-white shadow hover:bg-[#9d0005] focus:outline-none focus:ring-2 focus:ring-[#BF0006] focus:ring-offset-2">Enviar</button>
+                        <button type="button" id="modal-fale-conosco-cancel" class="rounded-lg border border-gray-300 bg-white px-4 py-2.5 font-medium text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Vida Arroz</h3>
+                    <p>O sabor que nasce na terra e transforma sua mesa.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('quem_somos') }}">Quem somos</a></li>
+                        <li><a href="{{ url_for('index') }}#produtos">Produtos</a></li>
+                        <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>Telefone: <a href="tel:+5551998835433" class="footer-contact-link">(51) 99883-5433</a></p>
+                    <p>Email: <a href="mailto:contato@vidaarroz.com.br" class="footer-contact-link">contato@vidaarroz.com.br</a></p>
+                    <div class="social-links">
+                        <a href="http://www.instagram.com/vida.arroz" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="http://www.facebook.com/vida.arroz" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Vida Arroz. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

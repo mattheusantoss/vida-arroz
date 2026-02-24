@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="background-image: url('{{ url_for('static', filename='images/cultivo-arroz.webp') }}');">
+    <div class="hero-blur-overlay"></div>
+    <div class="container">
+        <h1 class="hero-headline">O sabor que nasce na terra e transforma sua mesa.</h1>
+        <p class="hero-subheadline">Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.</p>
+    </div>
+</section>
+
+<!-- Seção Produtos -->
+<section id="produtos" class="produtos-section">
+    <div class="container">
+        <h2 class="section-title">Nossos Produtos</h2>
+        <div class="produtos-grid">
+            <div class="produto-card">
+                <div class="produto-image">
+                    <img src="{{ url_for('static', filename='images/vida-arroz-1.webp') }}" alt="Arroz Sustentável" class="produto-img">
+                </div>
+                <h3 class="produto-title">Sustentável</h3>
+                <p class="produto-description">Cultivado com práticas agrícolas responsáveis, respeitando o meio ambiente e garantindo qualidade superior.</p>
+                <a href="{{ url_for('sustentavel') }}" class="btn-cta produto-cta">Saiba mais</a>
+            </div>
+            <div class="produto-card">
+                <div class="produto-image">
+                    <img src="{{ url_for('static', filename='images/vida-arroz-2.webp') }}" alt="Arroz Clássico" class="produto-img">
+                </div>
+                <h3 class="produto-title">Clássico</h3>
+                <p class="produto-description">O sabor tradicional que você conhece e confia, com a qualidade que só a Vida Arroz oferece.</p>
+                <a href="{{ url_for('classico') }}" class="btn-cta produto-cta">Saiba mais</a>
+            </div>
+            <div class="produto-card">
+                <div class="produto-image">
+                    <img src="{{ url_for('static', filename='images/vida-arroz-3.webp') }}" alt="Arroz Gold" class="produto-img">
+                </div>
+                <h3 class="produto-title">Gold</h3>
+                <p class="produto-description">Nossa linha premium, selecionada entre os melhores grãos para uma experiência gastronômica única.</p>
+                <a href="{{ url_for('gold') }}" class="btn-cta produto-cta">Saiba mais</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção Diferenciais: background com imagem, overlay (blur padrão das internas) e parallax -->
+<section id="diferenciais" class="diferenciais-section diferenciais-section--parallax">
+    <div class="diferenciais-bg" style="background-image: url('{{ url_for('static', filename='images/close-up-crops-growing-field.webp') }}');" role="presentation" aria-hidden="true"></div>
+    <div class="diferenciais-overlay"></div>
+    <div class="container diferenciais-content">
+        <h2 class="section-title diferenciais-section-title">Nossos Diferenciais</h2>
+        <div class="diferenciais-grid">
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/green-house.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Cultivo Sustentável</h3>
+                <p class="diferencial-description">Práticas agrícolas que preservam o solo e a água para as futuras gerações.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/medal.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Qualidade Garantida</h3>
+                <p class="diferencial-description">Rigoroso controle de qualidade em todas as etapas da produção.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/delivery-service.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Entrega Rápida</h3>
+                <p class="diferencial-description">Do campo à sua mesa com agilidade e cuidado no transporte.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/share.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Compromisso Social</h3>
+                <p class="diferencial-description">Valorização dos produtores rurais e desenvolvimento das comunidades locais.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/sale.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Reconhecimento</h3>
+                <p class="diferencial-description">Certificações e prêmios que comprovam nossa excelência.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/green-thumb.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Impacto Positivo</h3>
+                <p class="diferencial-description">Contribuímos para um futuro mais sustentável e saudável.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção O Ciclo de Vida do Arroz: cards empilhados com setas ao rolar -->
+<section id="ciclo-vida" class="ciclo-vida-section">
+    <img src="{{ url_for('static', filename='images/arroz-esquerda.webp') }}" alt="" class="ciclo-vida-img ciclo-vida-img--left" width="280" height="320">
+    <img src="{{ url_for('static', filename='images/arroz-direita.webp') }}" alt="" class="ciclo-vida-img ciclo-vida-img--right" width="260" height="400">
+    <div class="container">
+        <h2 class="section-title">O Ciclo de Vida do Arroz</h2>
+        <div class="ciclo-vida-flow">
+            <div class="ciclo-card">
+                <div class="ciclo-card-icon">
+                    <img src="{{ url_for('static', filename='images/sustainable-agriculture.webp') }}" alt="" width="56" height="56">
+                </div>
+                <h3 class="ciclo-card-title">Cultivo Responsável</h3>
+                <p class="ciclo-card-text">Nosso arroz é cultivado em ambientes ideais, utilizando práticas agrícolas sustentáveis. Comprometemo-nos a preservar a biodiversidade e a saúde do solo.</p>
+            </div>
+            <div class="ciclo-arrow" aria-hidden="true">
+                <span class="ciclo-arrow-line"></span>
+                <span class="ciclo-arrow-head"></span>
+            </div>
+            <div class="ciclo-card">
+                <div class="ciclo-card-icon">
+                    <img src="{{ url_for('static', filename='images/hand.webp') }}" alt="" width="56" height="56">
+                </div>
+                <h3 class="ciclo-card-title">Colheita Cuidadosa</h3>
+                <p class="ciclo-card-text">A colheita é realizada no momento perfeito para garantir a máxima qualidade. Contamos com uma equipe dedicada, treinada para colher os grãos com a precisão que nossa marca exige.</p>
+            </div>
+            <div class="ciclo-arrow" aria-hidden="true">
+                <span class="ciclo-arrow-line"></span>
+                <span class="ciclo-arrow-head"></span>
+            </div>
+            <div class="ciclo-card">
+                <div class="ciclo-card-icon">
+                    <img src="{{ url_for('static', filename='images/creative.webp') }}" alt="" width="56" height="56">
+                </div>
+                <h3 class="ciclo-card-title">Beneficiamento Artesanal</h3>
+                <p class="ciclo-card-text">Instalações modernas e processos inovadores para garantir um beneficiamento eficiente. Cada grão passa por rigorosos padrões de qualidade.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

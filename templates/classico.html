@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Banner principal: mesmo padrão da interna Gold (hero com imagem, overlay sutil) -->
+<section class="hero hero--subtle" style="background-image: url('{{ url_for('static', filename='images/white-raw-rice-bowl-with-ear-dark-black-table-background.webp') }}');">
+    <div class="hero-blur-overlay hero-blur-overlay--subtle"></div>
+    <div class="container">
+        <h1 class="hero-headline">O arroz que faz parte da sua história.</h1>
+        <p class="hero-subheadline">Leve, soltinho e presente nos momentos mais importantes da família brasileira.</p>
+    </div>
+</section>
+
+<section class="product-content-section">
+    <div class="container">
+        <div class="product-content">
+            <p class="product-lead">O Vida Arroz Clássico é aquele que nunca falta.</p>
+            <p>Está no almoço de domingo, no prato feito do dia a dia, na receita passada de geração em geração. É o sabor que une a família ao redor da mesa.</p>
+            <p>Com grãos selecionados e padrão rigoroso de qualidade, ele entrega rendimento, textura perfeita e aquele resultado sempre confiável.</p>
+            <p class="product-tagline">Simples, versátil e indispensável. Porque tradição também é qualidade.</p>
+        </div>
+        <div class="product-image-wrap">
+            <img src="{{ url_for('static', filename='images/vida-arroz-2.webp') }}" alt="Vida Arroz Linha Clássico" class="product-page-img">
+        </div>
+    </div>
+</section>
+
+<section class="diferenciais-section">
+    <div class="container">
+        <h2 class="section-title">Diferenciais</h2>
+        <div class="diferenciais-grid product-diferenciais-grid">
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Grãos selecionados</h3>
+                <p class="diferencial-description">Matéria-prima de alta qualidade para o seu dia a dia.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Cozimento uniforme</h3>
+                <p class="diferencial-description">Resultado consistente em toda a panela.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Textura leve e soltinha</h3>
+                <p class="diferencial-description">Grãos soltos e no ponto, como você gosta.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Ideal para receitas do dia a dia</h3>
+                <p class="diferencial-description">Versátil para pratos clássicos e do cotidiano.</p>
+            </div>
+        </div>
+        <p class="product-cta-wrap"><a href="#" class="btn-cta js-open-fale-conosco" aria-haspopup="dialog">Fale conosco</a></p>
+    </div>
+</section>
+{% endblock %}

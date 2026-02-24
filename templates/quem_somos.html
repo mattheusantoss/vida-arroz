@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Banner principal Quem somos -->
+<section class="hero quem-somos-hero" style="background-image: url('{{ url_for('static', filename='images/hands-touching-rice-rice-field.webp') }}');">
+    <div class="hero-blur-overlay hero-blur-overlay--subtle quem-somos-hero-blur"></div>
+    <div class="container">
+        <h1 class="hero-headline quem-somos-hero-title">Quem somos</h1>
+    </div>
+</section>
+
+<!-- Seção Nossa História (com imagens laterais) -->
+<section class="product-content-section quem-somos-historia">
+    <img src="{{ url_for('static', filename='images/arroz-esquerda-2.jpg') }}" alt="" class="quem-somos-historia-img quem-somos-historia-img--left" width="220" height="280">
+    <img src="{{ url_for('static', filename='images/arroz-direita-2.jpg') }}" alt="" class="quem-somos-historia-img quem-somos-historia-img--right" width="220" height="280">
+    <div class="container">
+        <div class="product-content">
+            <p class="product-lead">A Vida Arroz é mais do que uma marca de arroz; somos uma jornada do plantio à mesa. Com um compromisso inabalável com a qualidade e a sustentabilidade, cultivamos e beneficiamos nossos próprios grãos, garantindo uma experiência culinária única e nutritiva.</p>
+
+            <h2 class="section-title quem-somos-h2">Nossa História</h2>
+            <p>Desde 1997, a Granja Ras tem trilhado um caminho de excelência na produção de arroz.</p>
+            <p>A Vida Arroz nasceu da paixão por cultivar a terra e proporcionar alimentos que nutrem não apenas o corpo, mas também a alma.</p>
+        </div>
+    </div>
+</section>
+
+<section class="product-content-section quem-somos-sustentabilidade">
+    <img src="{{ url_for('static', filename='images/arroz-esquerda.jpg') }}" alt="" class="ciclo-vida-img ciclo-vida-img--left" width="280" height="320">
+    <img src="{{ url_for('static', filename='images/arroz-direita.webp') }}" alt="" class="ciclo-vida-img ciclo-vida-img--right" width="260" height="400">
+    <div class="container">
+        <div class="product-content">
+            <h2 class="section-title quem-somos-h2 quem-somos-h2--one-line">Compromisso com a Sustentabilidade</h2>
+            <p class="product-lead">A Vida Arroz está comprometida com práticas agrícolas que respeitam o meio ambiente e promovem a sustentabilidade.</p>
+
+            <div class="sustentabilidade-item">
+                <div class="sustentabilidade-item-icon">
+                    <img src="{{ url_for('static', filename='images/farmer-is-working-field-with-water.jpg') }}" alt="">
+                </div>
+                <div class="sustentabilidade-item-content">
+                    <h3 class="quem-somos-h3">Uso responsável de recursos hídricos</h3>
+                    <p>Na Vida Arroz, implementamos sistemas de irrigação eficientes e práticas de manejo da água que visam otimizar o uso dos recursos hídricos. Além disso, investimos em tecnologias de reciclagem e reutilização da água, garantindo sua preservação e minimizando nosso impacto ambiental.</p>
+                </div>
+            </div>
+
+            <div class="sustentabilidade-item">
+                <div class="sustentabilidade-item-icon">
+                    <img src="{{ url_for('static', filename='images/low-section-agronomist-analyzing-soil-field.jpg') }}" alt="">
+                </div>
+                <div class="sustentabilidade-item-content">
+                    <h3 class="quem-somos-h3">Minimização de resíduos</h3>
+                    <p>Nossas instalações foram projetadas com foco na redução de resíduos. Utilizamos técnicas avançadas de reciclagem e compostagem para reaproveitar subprodutos do beneficiamento do arroz, reduzindo significativamente nosso desperdício e contribuindo para um ambiente mais limpo e saudável.</p>
+                </div>
+            </div>
+
+            <div class="sustentabilidade-item">
+                <div class="sustentabilidade-item-icon">
+                    <img src="{{ url_for('static', filename='images/agricultural-research-lab-studying-crop-innovations-together.jpg') }}" alt="">
+                </div>
+                <div class="sustentabilidade-item-content">
+                    <h3 class="quem-somos-h3">Práticas agrícolas sustentáveis</h3>
+                    <p>Comprometemo-nos a adotar práticas agrícolas que respeitem a fauna e a flora locais. Implementamos rotação de culturas, uso de adubos orgânicos e métodos de controle de pragas naturais para manter o equilíbrio ecológico em nossos campos de cultivo. Nossa abordagem sustentável visa preservar a biodiversidade e a saúde do ecossistema ao nosso redor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

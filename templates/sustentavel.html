@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Banner principal: mesmo padrão da interna Gold (hero com imagem, overlay sutil) -->
+<section class="hero hero--subtle" style="background-image: url('{{ url_for('static', filename='images/closeup-inner-basket-rice-washer-with-tiny-perforations-that-allow-water-flow-through-wash-rice-thoroughly.webp') }}');">
+    <div class="hero-blur-overlay hero-blur-overlay--subtle"></div>
+    <div class="container">
+        <h1 class="hero-headline">O futuro começa no campo. E chega puro à sua mesa.</h1>
+        <p class="hero-subheadline">Cultivado com responsabilidade, respeito à natureza e compromisso com as próximas gerações.</p>
+    </div>
+</section>
+
+<section class="product-content-section">
+    <div class="container">
+        <div class="product-content">
+            <p class="product-lead">A Linha Sustentável da Vida Arroz nasce de um princípio simples: produzir bem, respeitando tudo ao redor.</p>
+            <p>Cada grão é resultado de práticas agrícolas responsáveis, manejo consciente do solo e atenção constante à biodiversidade. Porque acreditamos que qualidade não é apenas sabor — é também origem.</p>
+            <p>Da lavoura até sua casa, seguimos um compromisso claro: preservar hoje para alimentar amanhã.</p>
+            <p class="product-tagline">Alimentar-se bem também é cuidar do planeta.</p>
+        </div>
+        <div class="product-image-wrap">
+            <img src="{{ url_for('static', filename='images/vida-arroz-1.webp') }}" alt="Vida Arroz Linha Sustentável" class="product-page-img">
+        </div>
+    </div>
+</section>
+
+<section class="diferenciais-section">
+    <div class="container">
+        <h2 class="section-title">Diferenciais</h2>
+        <div class="diferenciais-grid product-diferenciais-grid">
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Cultivo com responsabilidade ambiental</h3>
+                <p class="diferencial-description">Práticas que preservam solo, água e ecossistema.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Respeito à biodiversidade</h3>
+                <p class="diferencial-description">Manejo que protege a fauna e a flora locais.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Controle rigoroso de qualidade</h3>
+                <p class="diferencial-description">Garantia de padrão em cada etapa da produção.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon" aria-hidden="true"></div>
+                <h3 class="diferencial-title">Produção consciente do início ao fim</h3>
+                <p class="diferencial-description">Da semente à embalagem, compromisso com o planeta.</p>
+            </div>
+        </div>
+        <p class="product-cta-wrap"><a href="#" class="btn-cta js-open-fale-conosco" aria-haspopup="dialog">Fale conosco</a></p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Banner principal: mesmo padrão da hero, com overlay mais sutil para valorizar a imagem -->
+<section class="hero hero--subtle" style="background-image: url('{{ url_for('static', filename='images/banner-gold.webp') }}');">
+    <div class="hero-blur-overlay hero-blur-overlay--subtle"></div>
+    <div class="container">
+        <h1 class="hero-headline">Excelência que transforma receitas em experiência.</h1>
+        <p class="hero-subheadline">Grãos nobres para quem entende que cada detalhe faz diferença.</p>
+    </div>
+</section>
+
+<section class="product-content-section quem-somos-historia">
+    <img src="{{ url_for('static', filename='images/arroz-esquerda-2.webp') }}" alt="" class="quem-somos-historia-img quem-somos-historia-img--left" width="220" height="280">
+    <img src="{{ url_for('static', filename='images/arroz-direita-2.webp') }}" alt="" class="quem-somos-historia-img quem-somos-historia-img--right" width="220" height="280">
+    <div class="container">
+        <div class="product-content">
+            <p class="product-lead">A Linha Gold foi criada para quem exige mais.</p>
+            <p>Selecionado com rigor, o Vida Arroz Gold entrega padrão superior, textura impecável e apresentação elegante no prato.</p>
+            <p>Ideal para chefs, restaurantes e apaixonados por gastronomia que não abrem mão da excelência.</p>
+            <p class="product-tagline">Porque cozinhar é arte. E toda arte começa com o melhor ingrediente.</p>
+        </div>
+        <div class="product-image-wrap">
+            <img src="{{ url_for('static', filename='images/vida-arroz-3.webp') }}" alt="Vida Arroz Linha Gold" class="product-page-img">
+        </div>
+    </div>
+</section>
+
+<section class="diferenciais-section">
+    <div class="container">
+        <h2 class="section-title">Diferenciais</h2>
+        <div class="diferenciais-grid product-diferenciais-grid">
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/talambralu.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Seleção criteriosa de grãos</h3>
+                <p class="diferencial-description">Apenas os melhores grãos para a linha premium.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/rating.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Alta performance culinária</h3>
+                <p class="diferencial-description">Resultado profissional em cada preparo.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/rating.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Textura e aparência superiores</h3>
+                <p class="diferencial-description">Visual e sabor que impressionam à mesa.</p>
+            </div>
+            <div class="diferencial-item">
+                <div class="diferencial-icon diferencial-icon-img">
+                    <img src="{{ url_for('static', filename='images/cooking-hat.webp') }}" alt="" width="64" height="64">
+                </div>
+                <h3 class="diferencial-title">Padrão ideal para gastronomia profissional</h3>
+                <p class="diferencial-description">A escolha de quem entende de alta cozinha.</p>
+            </div>
+        </div>
+        <p class="product-cta-wrap"><a href="#" class="btn-cta js-open-fale-conosco" aria-haspopup="dialog">Fale conosco</a></p>
+    </div>
+</section>
+{% endblock %}

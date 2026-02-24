@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Banner Contato -->
+<section class="hero contato-hero" style="background-image: url('{{ url_for('static', filename='images/silhouettes-two-farmers-field-shaking-hands-as-sign-successful-deal.webp') }}');">
+    <div class="hero-blur-overlay hero-blur-overlay--subtle contato-hero-blur"></div>
+    <div class="container">
+        <h1 class="hero-headline contato-hero-title">Contato</h1>
+    </div>
+</section>
+
+<!-- Texto introdutório -->
+<section class="product-content-section contato-intro">
+    <div class="container">
+        <div class="product-content">
+            <p class="product-lead">Queremos ser parte das suas refeições memoráveis.</p>
+            <p>Entre em contato conosco para saber mais sobre a Vida Arroz e como podemos enriquecer sua experiência culinária.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contatos + Formulário lado a lado (com imagem decorativa à esquerda, padrão Ciclo de Vida) -->
+<section class="contato-section">
+    <img src="{{ url_for('static', filename='images/arroz-esquerda.webp') }}" alt="" class="ciclo-vida-img ciclo-vida-img--left" width="280" height="320">
+    <div class="container">
+        <div class="contato-grid">
+            <div class="contato-info">
+                <h2 class="contato-info-title">Fale conosco</h2>
+                <p class="contato-info-text">Estamos à disposição para tirar dúvidas e ouvir sua opinião.</p>
+                <ul class="contato-lista">
+                    <li class="contato-lista-item">
+                        <span class="contato-lista-label">Telefone</span>
+                        <a href="tel:+5551998835433" class="contato-lista-value">(51) 99883-5433</a>
+                    </li>
+                    <li class="contato-lista-item">
+                        <span class="contato-lista-label">E-mail</span>
+                        <a href="mailto:comercial.arroz@gmail.com" class="contato-lista-value">comercial.arroz@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contato-form-wrap">
+                <h2 class="contato-form-title">Envie sua mensagem</h2>
+                <form id="form-contato" class="contato-form" action="#" method="post">
+                    <div class="contato-form-group">
+                        <label for="contato-nome" class="contato-form-label">Nome</label>
+                        <input type="text" id="contato-nome" name="nome" required placeholder="Seu nome completo" class="contato-form-input">
+                    </div>
+                    <div class="contato-form-group">
+                        <label for="contato-telefone" class="contato-form-label">Telefone</label>
+                        <input type="tel" id="contato-telefone" name="telefone" required placeholder="(00) 00000-0000" class="contato-form-input">
+                    </div>
+                    <div class="contato-form-group">
+                        <label for="contato-email" class="contato-form-label">E-mail</label>
+                        <input type="email" id="contato-email" name="email" required placeholder="seu@email.com" class="contato-form-input">
+                    </div>
+                    <div class="contato-form-group">
+                        <label for="contato-mensagem" class="contato-form-label">Mensagem</label>
+                        <textarea id="contato-mensagem" name="mensagem" rows="4" required placeholder="Como podemos ajudar?" class="contato-form-input contato-form-textarea"></textarea>
+                    </div>
+                    <button type="submit" class="btn-cta contato-form-submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
