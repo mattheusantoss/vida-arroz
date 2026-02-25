@@ -1640,3 +1640,72 @@ button:focus-visible {
     outline: 2px solid var(--vermelho-cta);
     outline-offset: 2px;
 }
+
+/* Modal de agradecimento (página Contato) – padronizado com o site */
+.modal-obrigado {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.modal-obrigado.hidden {
+    display: none;
+}
+
+.modal-obrigado-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.modal-obrigado-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--branco-predominante);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 5, 69, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 5, 69, 0.08);
+    padding: 2rem 1.75rem;
+    text-align: center;
+}
+
+.modal-obrigado-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.25rem;
+    color: var(--azul-predominante);
+}
+
+.modal-obrigado-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-obrigado-title {
+    font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--azul-predominante);
+    margin-bottom: 0.5rem;
+}
+
+.modal-obrigado-text {
+    font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 1rem;
+    color: var(--cinza-texto);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modal-obrigado-btn {
+    min-width: 120px;
+    cursor: pointer;
+    border: none;
+}

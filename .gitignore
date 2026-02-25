@@ -12,6 +12,7 @@ __pycache__/
 
 # Flask
 instance/
+data/
 .webassets-cache
 
 # Variáveis de ambiente

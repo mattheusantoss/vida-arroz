@@ -1,6 +1,131 @@
 {% extends "admin/base_admin.html" %}
 {% block title %}Usuários{% endblock %}
 {% block content %}
-<h1 class="text-2xl font-bold text-[#000545] mb-6">Usuários</h1>
-<p class="text-gray-600">Em breve: gestão de usuários do painel.</p>
+<h1 class="text-2xl font-bold text-[#000545] mb-6">Usuários do painel</h1>
+
+{% if error %}
+<div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">{{ error }}</div>
+{% endif %}
+{% if success %}
+<div class="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-green-800 text-sm">{{ success }}</div>
+{% endif %}
+
+<div class="grid gap-8 lg:grid-cols-2">
+    <!-- Formulário: novo usuário -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Criar novo usuário</h2>
+        <form action="{{ url_for('admin_usuarios') }}" method="post" class="space-y-4">
+            <input type="hidden" name="action" value="create">
+            <div>
+                <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome de exibição"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+            </div>
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">E-mail de acesso <span class="text-red-600">*</span></label>
+                <input type="text" id="username" name="username" required placeholder="usuario@email.com"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]"
+                    autocomplete="username">
+                <p class="mt-1 text-xs text-gray-500">Usado para fazer login no painel.</p>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail (opcional)</label>
+                <input type="email" id="email" name="email" placeholder="email@exemplo.com"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha <span class="text-red-600">*</span></label>
+                <input type="password" id="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]"
+                    autocomplete="new-password">
+            </div>
+            <div>
+                <label for="permissao" class="block text-sm font-medium text-gray-700 mb-1">Permissão</label>
+                <select id="permissao" name="permissao" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                    {% for valor, label in permissoes_list %}
+                    <option value="{{ valor }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <p class="mt-1 text-xs text-gray-500">Administrador: acesso total. Editor: pode editar conteúdo. Visualizador: apenas leitura.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="ativo" name="ativo" checked
+                    class="rounded border-gray-300 text-[#000545] focus:ring-[#000545]">
+                <label for="ativo" class="text-sm font-medium text-gray-700">Usuário ativo (pode fazer login)</label>
+            </div>
+            <button type="submit" class="w-full rounded-lg bg-[#000545] px-4 py-3 font-semibold text-white hover:bg-[#000435] focus:outline-none focus:ring-2 focus:ring-[#000545] focus:ring-offset-2">
+                Criar usuário
+            </button>
+        </form>
+    </div>
+
+    <!-- Lista de usuários -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Usuários cadastrados</h2>
+        {% if users %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-3 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Nome</th>
+                        <th class="px-3 py-2 text-left text-xs font-semibold text-gray-600 uppercase">E-mail de acesso</th>
+                        <th class="px-3 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+                        <th class="px-3 py-2 text-left text-xs font-semibold text-gray-600 uppercase">Permissões</th>
+                        <th class="px-3 py-2 text-right text-xs font-semibold text-gray-600 uppercase">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for u in users %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-3 py-3 text-sm font-medium text-gray-900">{{ u.nome or u.username }}</td>
+                        <td class="px-3 py-3 text-sm text-gray-600">{{ u.username }}</td>
+                        <td class="px-3 py-3">
+                            <form action="{{ url_for('admin_usuarios') }}" method="post" class="inline">
+                                <input type="hidden" name="action" value="toggle_ativo">
+                                <input type="hidden" name="id" value="{{ u.id }}">
+                                {% if u.ativo is none or u.ativo == 1 %}
+                                <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 mr-1">Ativo</span>
+                                <button type="submit" class="text-xs font-medium text-amber-700 hover:text-amber-800">Desativar</button>
+                                {% else %}
+                                <span class="inline-flex items-center rounded-full bg-gray-200 px-2.5 py-0.5 text-xs font-medium text-gray-700 mr-1">Inativo</span>
+                                <button type="submit" class="text-xs font-medium text-green-700 hover:text-green-800">Ativar</button>
+                                {% endif %}
+                            </form>
+                        </td>
+                        <td class="px-3 py-3">
+                            {% set role = (u.permissao or 'editor') %}
+                            {% if role == 'admin' %}{% set role_label = 'Administrador' %}
+                            {% elif role == 'editor' %}{% set role_label = 'Editor' %}
+                            {% else %}{% set role_label = 'Visualizador' %}{% endif %}
+                            <form action="{{ url_for('admin_usuarios') }}" method="post" class="inline-flex items-center gap-2 flex-wrap">
+                                <input type="hidden" name="action" value="alterar_permissao">
+                                <input type="hidden" name="id" value="{{ u.id }}">
+                                <select name="permissao" class="rounded border border-gray-300 px-2 py-1 text-xs text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                                    {% for valor, label in permissoes_list %}
+                                    <option value="{{ valor }}" {% if role == valor %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="text-xs font-medium text-[#000545] hover:underline">Alterar</button>
+                            </form>
+                        </td>
+                        <td class="px-3 py-3 text-right">
+                            {% if users|length > 1 %}
+                            <form action="{{ url_for('admin_usuarios') }}" method="post" class="inline" onsubmit="return confirm('Excluir este usuário? Ele não poderá mais acessar o painel.');">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id" value="{{ u.id }}">
+                                <button type="submit" class="text-xs font-medium text-red-600 hover:text-red-700">Excluir</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p class="mt-3 text-sm text-gray-500">Total: {{ users|length }} usuário(s).</p>
+        {% else %}
+        <p class="text-gray-500 text-sm">Nenhum usuário cadastrado. Crie o primeiro ao lado.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

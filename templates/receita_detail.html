@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}{{ receita.titulo }}{% endblock %}
+{% block content %}
+<article class="py-12 md:py-16">
+    <div class="container max-w-3xl mx-auto px-4">
+        <a href="{{ url_for('receitas') }}" class="inline-flex items-center gap-2 text-[#000545] hover:underline text-sm font-medium mb-6">
+            ← Voltar para Receitas
+        </a>
+
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#000545] mb-4">{{ receita.titulo }}</h1>
+            {% if receita.created_at %}
+            <p class="text-gray-500 text-sm">{{ receita.created_at[:10] }}</p>
+            {% endif %}
+        </header>
+
+        {% if receita.get('imagem_destaque') %}
+        <div class="rounded-xl overflow-hidden shadow-lg mb-8">
+            <img src="{{ url_for('static', filename=(receita.imagem_destaque or '')|replace('\\', '/')) }}" alt="{{ receita.titulo }}" class="w-full h-auto object-cover">
+        </div>
+        {% endif %}
+
+        {% if receita.get('video_arquivo') %}
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-[#000545] mb-3">Vídeo da receita</h2>
+            <div class="aspect-video rounded-xl overflow-hidden bg-black">
+                <video class="w-full h-full" controls preload="metadata" src="{{ url_for('static', filename=receita.video_arquivo) }}" title="Vídeo da receita">Seu navegador não suporta vídeo.</video>
+            </div>
+        </div>
+        {% elif receita.get('video_url') %}
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-[#000545] mb-3">Vídeo da receita</h2>
+            <div class="aspect-video rounded-xl overflow-hidden bg-black">
+                {% if 'youtube.com' in receita.video_url or 'youtu.be' in receita.video_url %}
+                {% set vid = receita.video_url.split('v=')[-1].split('&')[0] if 'v=' in receita.video_url else receita.video_url.split('/')[-1] %}
+                <iframe src="https://www.youtube.com/embed/{{ vid }}" title="Vídeo da receita" class="w-full h-full" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                {% elif 'vimeo.com' in receita.video_url %}
+                {% set vid = receita.video_url.rstrip('/').split('/')[-1] %}
+                <iframe src="https://player.vimeo.com/video/{{ vid }}" title="Vídeo da receita" class="w-full h-full" allowfullscreen></iframe>
+                {% else %}
+                <iframe src="{{ receita.video_url }}" title="Vídeo da receita" class="w-full h-full" allowfullscreen></iframe>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if receita.get('ingredientes') %}
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold text-[#000545] mb-3">Ingredientes</h2>
+            <div class="prose prose-gray max-w-none">
+                <div class="whitespace-pre-wrap text-gray-700">{{ receita.ingredientes }}</div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if receita.get('modo_preparo') %}
+        <section class="prose prose-gray max-w-none mb-8">
+            <h2 class="text-xl font-semibold text-[#000545] mb-3">Modo de Preparo</h2>
+            <div class="text-gray-700 receita-conteudo">{{ receita.modo_preparo|safe }}</div>
+        </section>
+        {% endif %}
+
+        {% if receita.get('conteudo') %}
+        <section class="prose prose-gray max-w-none">
+            <h2 class="text-xl font-semibold text-[#000545] mb-3">Considerações sobre o prato</h2>
+            <div class="text-gray-700 receita-conteudo">{{ receita.conteudo|safe }}</div>
+        </section>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

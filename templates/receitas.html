@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Receitas{% endblock %}
+{% block content %}
+<section class="py-12 md:py-16">
+    <div class="container max-w-6xl mx-auto px-4">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#000545] mb-2">Receitas</h1>
+        <p class="text-gray-600 mb-10">Receitas deliciosas com Vida Arroz para o seu dia a dia.</p>
+
+        {% if not_found %}
+        <div class="rounded-xl bg-amber-50 border border-amber-200 p-6 text-center mb-10">
+            <p class="text-amber-800 font-medium">Receita não encontrada.</p>
+            <p class="text-amber-700 text-sm mt-1">Confira a lista abaixo ou volte à página de receitas.</p>
+        </div>
+        {% endif %}
+
+        {% if receitas_list and receitas_list|length > 0 %}
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {% for r in receitas_list %}
+            <a href="{{ url_for('receita_detail', slug_or_id=(r.get('slug') or r.get('id'))|string) }}" class="group block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md hover:border-[#000545]/30 transition">
+                {% if r.get('imagem_destaque') %}
+                <div class="aspect-video bg-gray-100 overflow-hidden">
+                    <img src="{{ url_for('static', filename=(r.imagem_destaque or '')|replace('\\', '/')) }}" alt="{{ r.titulo }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                </div>
+                {% else %}
+                <div class="aspect-video bg-gray-200 flex items-center justify-center text-gray-400">
+                    <span class="text-4xl">🍚</span>
+                </div>
+                {% endif %}
+                <div class="p-4">
+                    <h2 class="text-lg font-semibold text-[#000545] group-hover:text-[#000435] line-clamp-2">{{ r.titulo }}</h2>
+                    <p class="text-xs text-gray-500 mt-1">{{ r.created_at[:10] if r.created_at else '' }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16 rounded-xl bg-gray-50 border border-gray-100">
+            <p class="text-xl text-gray-600 mb-4">Em breve você encontrará receitas aqui.</p>
+            <p class="text-gray-500">Volte em alguns dias ou entre em contato conosco pelo menu "Fale conosco".</p>
+            <a href="{{ url_for('index') }}" class="inline-block mt-6 rounded-lg bg-[#000545] px-6 py-3 font-semibold text-white hover:bg-[#000435] transition">Voltar ao início</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

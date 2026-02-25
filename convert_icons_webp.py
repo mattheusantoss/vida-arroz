@@ -16,6 +16,7 @@ ICONS_PNG = [
     "green-house.png", "medal.png", "delivery-service.png",
     "share.png", "sale.png", "green-thumb.png",
     "sustainable-agriculture.png", "hand.png", "creative.png",
+    "favicon-vida-arroz.png",
 ]
 IMAGES_JPG = [
     "banner-gold.jpg",

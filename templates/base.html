@@ -27,7 +27,7 @@
     <meta property="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/twitter-image.jpg') }}{% endblock %}">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon-vida-arroz.png') }}">
     
     <!-- Google Fonts - Lexend -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,6 +64,7 @@
                             <li><a href="{{ url_for('gold') }}">Gold</a></li>
                         </ul>
                     </li>
+                    <li><a href="{{ url_for('receitas') }}">Receitas</a></li>
                     <li><a href="{{ url_for('contato') }}">Fale conosco</a></li>
                 </ul>
             </div>

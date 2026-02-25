@@ -320,7 +320,7 @@ function initContatoForm() {
         .then(function(result) {
             if (result.ok && result.data.ok) {
                 form.reset();
-                alert('Mensagem enviada! Entraremos em contato em breve.');
+                showModalContatoObrigado();
             } else {
                 alert(result.data.error || 'Não foi possível enviar. Tente novamente.');
             }
@@ -330,6 +330,27 @@ function initContatoForm() {
             if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
         });
     });
+
+    function showModalContatoObrigado() {
+        var modal = document.getElementById('modal-contato-obrigado');
+        var backdrop = document.getElementById('modal-contato-obrigado-backdrop');
+        var btnClose = document.getElementById('modal-contato-obrigado-close');
+        if (!modal) return;
+        function close() {
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (backdrop) backdrop.addEventListener('click', close, { once: true });
+        if (btnClose) btnClose.addEventListener('click', close, { once: true });
+        btnClose && btnClose.focus();
+        document.addEventListener('keydown', function onEsc(e) {
+            if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onEsc); }
+        }, { once: true });
+    }
 }
 
 /**
