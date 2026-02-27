@@ -2,11 +2,29 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero" style="background-image: url('{{ url_for('static', filename='images/cultivo-arroz.webp') }}');">
+<section class="hero hero-home" style="background-image: url('{{ url_for('static', filename='images/cultivo-arroz.webp') }}');">
     <div class="hero-blur-overlay"></div>
     <div class="container">
-        <h1 class="hero-headline">O sabor que nasce na terra e transforma sua mesa.</h1>
-        <p class="hero-subheadline">Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.</p>
+        <div class="hero-home-layout">
+            <div class="hero-home-content">
+                <h1 class="hero-headline">O sabor que nasce na terra e transforma sua mesa.</h1>
+                <p class="hero-subheadline">Da fazenda ao seu prato, cultivamos mais que arroz: cultivamos cuidado, sustentabilidade e excelência em cada grão.</p>
+            </div>
+            <div class="hero-home-gallery" aria-label="Galeria de destaque Vida Arroz">
+                <figure class="hero-home-card hero-home-card--1">
+                    <img src="{{ url_for('static', filename='images/hands-touching-rice-rice-field.webp') }}" alt="Mãos tocando os grãos de arroz no campo">
+                </figure>
+                <figure class="hero-home-card hero-home-card--2">
+                    <img src="{{ url_for('static', filename='images/scenic-view-agricultural-field-against-sky.webp') }}" alt="Vista do campo de cultivo de arroz">
+                </figure>
+                <figure class="hero-home-card hero-home-card--3">
+                    <img src="{{ url_for('static', filename='images/close-up-crops-growing-field.webp') }}" alt="Close dos cultivos de arroz">
+                </figure>
+                <figure class="hero-home-card hero-home-card--4">
+                    <img src="{{ url_for('static', filename='images/white-raw-rice-bowl-with-ear-dark-black-table-background.webp') }}" alt="Tigela com arroz branco em destaque">
+                </figure>
+            </div>
+        </div>
     </div>
 </section>
 
