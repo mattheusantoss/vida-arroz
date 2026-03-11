@@ -32,32 +32,40 @@
 <section id="produtos" class="produtos-section">
     <div class="container">
         <h2 class="section-title">Nossos Produtos</h2>
-        <div class="produtos-grid">
-            <div class="produto-card">
-                <div class="produto-image">
-                    <img src="{{ url_for('static', filename='images/vida-arroz-1.webp') }}" alt="Arroz Sustentável" class="produto-img">
+        {% if produtos_list %}
+        <div class="produtos-carousel" data-produtos-count="{{ produtos_list|length }}">
+            <button type="button" class="produtos-carousel-btn produtos-carousel-btn--prev" aria-label="Produto anterior">
+                ‹
+            </button>
+            <div class="produtos-carousel-viewport">
+                <div class="produtos-carousel-track">
+                    {% for p in produtos_list %}
+                    <article class="produto-card">
+                        <div class="produto-image">
+                            {% if p.imagem_destaque %}
+                            <img src="{{ url_for('static', filename=(p.imagem_destaque or '')|replace('\\', '/')) }}" alt="{{ p.nome }}" class="produto-img">
+                            {% else %}
+                            <div class="produto-img produto-img--placeholder">VA</div>
+                            {% endif %}
+                        </div>
+                        <h3 class="produto-title">{{ p.nome }}</h3>
+                        {% if p.descricao %}
+                        <p class="produto-description">{{ p.descricao }}</p>
+                        {% endif %}
+                        {% if p.pagina %}
+                        <a href="{{ url_for(p.pagina) }}" class="btn-cta produto-cta">Saiba mais</a>
+                        {% endif %}
+                    </article>
+                    {% endfor %}
                 </div>
-                <h3 class="produto-title">Sustentável</h3>
-                <p class="produto-description">Cultivado com práticas agrícolas responsáveis, respeitando o meio ambiente e garantindo qualidade superior.</p>
-                <a href="{{ url_for('sustentavel') }}" class="btn-cta produto-cta">Saiba mais</a>
             </div>
-            <div class="produto-card">
-                <div class="produto-image">
-                    <img src="{{ url_for('static', filename='images/vida-arroz-2.webp') }}" alt="Arroz Clássico" class="produto-img">
-                </div>
-                <h3 class="produto-title">Clássico</h3>
-                <p class="produto-description">O sabor tradicional que você conhece e confia, com a qualidade que só a Vida Arroz oferece.</p>
-                <a href="{{ url_for('classico') }}" class="btn-cta produto-cta">Saiba mais</a>
-            </div>
-            <div class="produto-card">
-                <div class="produto-image">
-                    <img src="{{ url_for('static', filename='images/vida-arroz-3.webp') }}" alt="Arroz Gold" class="produto-img">
-                </div>
-                <h3 class="produto-title">Gold</h3>
-                <p class="produto-description">Nossa linha premium, selecionada entre os melhores grãos para uma experiência gastronômica única.</p>
-                <a href="{{ url_for('gold') }}" class="btn-cta produto-cta">Saiba mais</a>
-            </div>
+            <button type="button" class="produtos-carousel-btn produtos-carousel-btn--next" aria-label="Próximo produto">
+                ›
+            </button>
         </div>
+        {% else %}
+        <p class="mt-4 text-gray-600">Em breve você encontrará aqui as linhas de produto Vida Arroz.</p>
+        {% endif %}
     </div>
 </section>
 

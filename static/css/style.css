@@ -1138,6 +1138,83 @@ body {
     margin-top: auto;
 }
 
+/* Carrossel de produtos (home) */
+.produtos-carousel {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.produtos-carousel-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+.produtos-carousel-track {
+    display: flex;
+    gap: 1.75rem;
+    padding-bottom: 0.5rem;
+}
+
+.produtos-carousel .produto-card {
+    min-width: 240px;
+    max-width: 320px;
+}
+
+.produtos-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    border: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 5, 69, 0.9);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.produtos-carousel-btn--prev {
+    left: -0.75rem;
+}
+
+.produtos-carousel-btn--next {
+    right: -0.75rem;
+}
+
+.produtos-carousel--active .produtos-carousel-btn {
+    display: inline-flex;
+}
+
+.produtos-carousel--static .produtos-carousel-viewport {
+    overflow: visible;
+}
+
+.produtos-carousel--static .produtos-carousel-track {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.produto-img--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 20% 20%, #ffffff, #f3f3f3);
+    color: var(--azul-predominante);
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
 /* ============================================
    SEÇÃO INSTITUCIONAL (Mobile-First)
    ============================================ */
@@ -1639,6 +1716,11 @@ body {
     }
 
     .produtos-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .produtos-carousel--static .produtos-carousel-track {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
     }

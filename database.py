@@ -108,6 +108,40 @@ def init_db():
                     conn.execute("ALTER TABLE admin_users ADD COLUMN permissao TEXT DEFAULT 'editor'")
                     conn.execute("UPDATE admin_users SET permissao = 'admin' WHERE permissao IS NULL")
                 conn.execute("""
+                    CREATE TABLE IF NOT EXISTS produtos (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        nome TEXT NOT NULL,
+                        slug TEXT,
+                        descricao TEXT,
+                        imagem_destaque TEXT,
+                        ativo INTEGER DEFAULT 1,
+                        ordem INTEGER,
+                        pagina TEXT,
+                        created_at TEXT NOT NULL
+                    )
+                """)
+                cur = conn.execute("PRAGMA table_info(produtos)")
+                cols = [row[1] for row in cur.fetchall()]
+                if 'slug' not in cols:
+                    conn.execute("ALTER TABLE produtos ADD COLUMN slug TEXT")
+                if 'ordem' not in cols:
+                    conn.execute("ALTER TABLE produtos ADD COLUMN ordem INTEGER")
+                if 'pagina' not in cols:
+                    conn.execute("ALTER TABLE produtos ADD COLUMN pagina TEXT")
+                # Produtos iniciais (Sustentável, Clássico, Gold) linkados às internas
+                cur = conn.execute("SELECT COUNT(*) FROM produtos")
+                if cur.fetchone()[0] == 0:
+                    now = datetime.utcnow().isoformat()
+                    conn.executemany(
+                        """INSERT INTO produtos (nome, slug, descricao, imagem_destaque, ativo, ordem, pagina, created_at)
+                           VALUES (?,?,?,?,1,?,?,?)""",
+                        [
+                            ('Sustentável', 'sustentavel', 'Cultivado com práticas agrícolas responsáveis, respeitando o meio ambiente e garantindo qualidade superior.', 'images/vida-arroz-1.webp', 1, 'sustentavel', now),
+                            ('Clássico', 'classico', 'O sabor tradicional que você conhece e confia, com a qualidade que só a Vida Arroz oferece.', 'images/vida-arroz-2.webp', 2, 'classico', now),
+                            ('Gold', 'gold', 'Nossa linha premium, selecionada entre os melhores grãos para uma experiência gastronômica única.', 'images/vida-arroz-3.webp', 3, 'gold', now),
+                        ],
+                    )
+                conn.execute("""
                     CREATE TABLE IF NOT EXISTS receitas (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         titulo TEXT NOT NULL,
@@ -125,6 +159,13 @@ def init_db():
                 cols = [row[1] for row in cur.fetchall()]
                 if 'slug' not in cols:
                     conn.execute("ALTER TABLE receitas ADD COLUMN slug TEXT")
+                conn.execute("""
+                    CREATE TABLE IF NOT EXISTS visitas (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        path TEXT NOT NULL,
+                        created_at TEXT NOT NULL
+                    )
+                """)
     _safe_db(_init, None)
 
 
@@ -169,6 +210,137 @@ def count_leads_por_mes(ano, mes):
             cur = conn.execute("SELECT COUNT(*) FROM leads WHERE created_at LIKE ?", (prefixo + "%",))
             return cur.fetchone()[0] or 0
     return _safe_db(_count, 0)
+
+
+def insert_visita(path: str):
+    def _insert():
+        with _db_lock:
+            with _db() as conn:
+                conn.execute(
+                    "INSERT INTO visitas (path, created_at) VALUES (?,?)",
+                    (path or '/', datetime.utcnow().isoformat()),
+                )
+    return _safe_db(_insert, None)
+
+
+def count_visitas_por_mes(ano, mes):
+    """Quantidade de visitas registradas no mês."""
+    def _count():
+        with _db() as conn:
+            prefixo = f"{int(ano):04d}-{int(mes):02d}-"
+            cur = conn.execute(
+                "SELECT COUNT(*) FROM visitas WHERE created_at LIKE ?",
+                (prefixo + "%",),
+            )
+            return cur.fetchone()[0] or 0
+    return _safe_db(_count, 0)
+
+
+def get_all_produtos(ativos_apenas=True):
+    def _get():
+        with _db() as conn:
+            conn.row_factory = sqlite3.Row
+            where = "WHERE ativo = 1" if ativos_apenas else ""
+            cur = conn.execute(
+                f"SELECT id, nome, slug, descricao, imagem_destaque, ativo, ordem, pagina, created_at "
+                f"FROM produtos {where} "
+                f"ORDER BY CASE WHEN ordem IS NULL THEN 1 ELSE 0 END, ordem, created_at DESC"
+            )
+            return [dict(row) for row in cur.fetchall()]
+    return _safe_db(_get, [])
+
+
+def get_produto_by_id(produto_id):
+    def _get():
+        with _db() as conn:
+            conn.row_factory = sqlite3.Row
+            cur = conn.execute(
+                "SELECT id, nome, slug, descricao, imagem_destaque, ativo, ordem, pagina, created_at FROM produtos WHERE id = ?",
+                (produto_id,),
+            )
+            row = cur.fetchone()
+            return dict(row) if row else None
+    return _safe_db(_get, None)
+
+
+def insert_produto(nome, descricao=None, imagem_destaque=None, ativo=True, ordem=None, pagina=None):
+    def _insert():
+        with _db_lock:
+            with _db() as conn:
+                now = datetime.utcnow().isoformat()
+                cur = conn.execute(
+                    """INSERT INTO produtos (nome, slug, descricao, imagem_destaque, ativo, ordem, pagina, created_at)
+                       VALUES (?,?,?,?,?,?,?,?)""",
+                    (
+                        nome or '',
+                        slugify(nome),
+                        descricao or '',
+                        imagem_destaque or '',
+                        1 if ativo else 0,
+                        ordem,
+                        (pagina or '').strip() or None,
+                        now,
+                    ),
+                )
+                return cur.lastrowid
+    return _safe_db(_insert, None)
+
+
+def update_produto(produto_id, nome=None, descricao=None, imagem_destaque=None, ativo=None, ordem=None, pagina=None):
+    def _update():
+        with _db_lock:
+            with _db() as conn:
+                updates, params = [], []
+                if nome is not None:
+                    updates.append("nome = ?")
+                    params.append(nome)
+                    updates.append("slug = ?")
+                    params.append(slugify(nome))
+                if descricao is not None:
+                    updates.append("descricao = ?")
+                    params.append(descricao)
+                if imagem_destaque is not None:
+                    updates.append("imagem_destaque = ?")
+                    params.append(imagem_destaque)
+                if ativo is not None:
+                    updates.append("ativo = ?")
+                    params.append(1 if ativo else 0)
+                if ordem is not None:
+                    updates.append("ordem = ?")
+                    params.append(ordem)
+                if pagina is not None:
+                    updates.append("pagina = ?")
+                    params.append((pagina or '').strip() or None)
+                if not updates:
+                    return True
+                params.append(produto_id)
+                conn.execute(
+                    "UPDATE produtos SET " + ", ".join(updates) + " WHERE id = ?",
+                    params,
+                )
+                return True
+    return _safe_db(_update, False)
+
+
+def set_produto_ativo(produto_id, ativo):
+    def _set():
+        with _db_lock:
+            with _db() as conn:
+                conn.execute(
+                    "UPDATE produtos SET ativo = ? WHERE id = ?",
+                    (1 if ativo else 0, produto_id),
+                )
+                return True
+    return _safe_db(_set, False)
+
+
+def delete_produto(produto_id):
+    def _delete():
+        with _db_lock:
+            with _db() as conn:
+                cur = conn.execute("DELETE FROM produtos WHERE id = ?", (produto_id,))
+                return cur.rowcount > 0
+    return _safe_db(_delete, False)
 
 
 def get_admin_by_username(username):

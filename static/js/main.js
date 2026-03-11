@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initWhatsAppModal();
     initContatoForm();
     initPhoneMasks();
+    initProdutosCarousel();
 });
 
 /**
@@ -291,6 +292,44 @@ function initCicloVidaAnimation() {
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
     observer.observe(section);
+}
+
+/**
+ * Carrossel de produtos na home: vira carrossel apenas quando há 4+ itens
+ */
+function initProdutosCarousel() {
+    var wrapper = document.querySelector('.produtos-carousel');
+    if (!wrapper) return;
+    var count = parseInt(wrapper.getAttribute('data-produtos-count') || '0', 10);
+    var viewport = wrapper.querySelector('.produtos-carousel-viewport');
+    var track = wrapper.querySelector('.produtos-carousel-track');
+    var btnPrev = wrapper.querySelector('.produtos-carousel-btn--prev');
+    var btnNext = wrapper.querySelector('.produtos-carousel-btn--next');
+    if (!viewport || !track || !btnPrev || !btnNext) return;
+
+    if (count < 4) {
+        wrapper.classList.add('produtos-carousel--static');
+        return;
+    }
+
+    wrapper.classList.add('produtos-carousel--active');
+
+    function getStep() {
+        var card = track.querySelector('.produto-card');
+        if (card) {
+            var rect = card.getBoundingClientRect();
+            return rect.width + 24; // largura + gap aproximado
+        }
+        return viewport.clientWidth || 300;
+    }
+
+    btnPrev.addEventListener('click', function() {
+        viewport.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    });
+
+    btnNext.addEventListener('click', function() {
+        viewport.scrollBy({ left: getStep(), behavior: 'smooth' });
+    });
 }
 
 /**

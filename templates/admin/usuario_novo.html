@@ -1,0 +1,85 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Editar usuário' if usuario else 'Novo usuário' }}{% endblock %}
+{% block content %}
+<div class="mb-6 flex items-center justify-between gap-4">
+    <a href="{{ url_for('admin_usuarios') }}" class="text-sm font-medium text-[#000545] hover:underline">← Voltar para Usuários</a>
+    {% if success %}
+    <span class="inline-flex items-center rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-800 border border-green-200">{{ success }}</span>
+    {% endif %}
+</div>
+
+<h1 class="text-2xl font-bold text-[#000545] mb-4">
+    {% if usuario %}Editar usuário{% else %}Criar novo usuário{% endif %}
+</h1>
+<p class="text-gray-600 mb-6 text-sm max-w-2xl">
+    {% if usuario %}
+    Atualize os dados de acesso e permissões deste usuário do painel.
+    {% else %}
+    Cadastre um novo usuário para acessar o painel administrativo Vida Arroz.
+    {% endif %}
+</p>
+
+<div class="max-w-xl">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {% if error %}
+        <div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-2 text-red-700 text-sm">{{ error }}</div>
+        {% endif %}
+        <form action="{{ url_for('admin_usuarios_novo', editar=usuario.id if usuario else None) }}" method="post" class="space-y-4">
+            <div>
+                <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome de exibição"
+                    value="{{ usuario.nome if usuario else '' }}"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+            </div>
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">E-mail de acesso <span class="text-red-600">*</span></label>
+                <input type="text" id="username" name="username" required
+                    value="{{ usuario.username if usuario else '' }}"
+                    placeholder="usuario@email.com"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]"
+                    autocomplete="username">
+                <p class="mt-1 text-xs text-gray-500">Usado para fazer login no painel.</p>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail (opcional)</label>
+                <input type="email" id="email" name="email"
+                    value="{{ usuario.email if usuario else '' }}"
+                    placeholder="email@exemplo.com"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    Senha {% if not usuario %}<span class="text-red-600">*</span>{% endif %}
+                </label>
+                <input type="password" id="password" name="password"
+                    {% if not usuario %}required minlength="6"{% endif %}
+                    placeholder="{% if usuario %}Edição não altera a senha (apenas novos usuários){% else %}Mínimo 6 caracteres{% endif %}"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]"
+                    autocomplete="new-password">
+            </div>
+            <div>
+                <label for="permissao" class="block text-sm font-medium text-gray-700 mb-1">Permissão</label>
+                {% set current_role = usuario.permissao if usuario else 'editor' %}
+                <select id="permissao" name="permissao" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-1 focus:ring-[#000545]">
+                    {% for valor, label in permissoes_list %}
+                    <option value="{{ valor }}" {% if current_role == valor %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <p class="mt-1 text-xs text-gray-500">Administrador: acesso total. Editor: pode editar conteúdo. Visualizador: apenas leitura.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="ativo" name="ativo" {% if not usuario or usuario.ativo %}checked{% endif %}
+                    class="rounded border-gray-300 text-[#000545] focus:ring-[#000545]">
+                <label for="ativo" class="text-sm font-medium text-gray-700">Usuário ativo (pode fazer login)</label>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <a href="{{ url_for('admin_usuarios') }}" class="text-sm font-medium text-gray-600 hover:text-gray-800">Cancelar</a>
+                <button type="submit" class="rounded-lg bg-[#000545] px-5 py-2.5 font-semibold text-white hover:bg-[#000435] focus:outline-none focus:ring-2 focus:ring-[#000545] focus:ring-offset-2">
+                    {% if usuario %}Salvar alterações{% else %}Criar usuário{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

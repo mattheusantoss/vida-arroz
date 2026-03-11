@@ -1,0 +1,87 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Nova receita{% endblock %}
+{% block content %}
+<div class="mb-6 flex items-center justify-between gap-4">
+    <a href="{{ url_for('admin_receitas') }}" class="text-sm font-medium text-[#000545] hover:underline">← Voltar para Receitas</a>
+</div>
+<h1 class="text-2xl font-bold text-[#000545] mb-4">Publicar nova receita</h1>
+<p class="text-gray-600 mb-6 text-sm max-w-2xl">Cadastre aqui receitas que serão exibidas na seção de Receitas do site.</p>
+
+<div class="max-w-3xl">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {% if error %}
+        <p class="mb-4 text-red-600 text-sm">{{ error }}</p>
+        {% endif %}
+        <form action="{{ url_for('admin_receita_nova') }}" method="post" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label for="titulo" class="block text-sm font-medium text-gray-700 mb-1">Título (H1)</label>
+                <input type="text" id="titulo" name="titulo" required
+                    placeholder="Ex: Arroz soltinho com legumes"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-2 focus:ring-[#000545]/30 text-lg font-semibold">
+            </div>
+            <div>
+                <label for="ingredientes" class="block text-sm font-medium text-gray-700 mb-1">Ingredientes</label>
+                <textarea id="ingredientes" name="ingredientes" rows="6"
+                    placeholder="Liste os ingredientes, um por linha ou em tópicos."
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-2 focus:ring-[#000545]/30 resize-y min-h-[120px]"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Considerações sobre o prato (opcional)</label>
+                <p class="text-xs text-gray-500 mb-2">Observações, dicas ou comentários sobre a receita. Use os botões para negrito, itálico, etc.</p>
+                <input type="hidden" name="conteudo" id="conteudo">
+                <div id="conteudo-editor" class="min-h-[120px] rounded-lg border border-gray-300 bg-white text-gray-900" style="height: 140px;"></div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Modo de preparo</label>
+                <p class="text-xs text-gray-500 mb-2">Passo a passo da receita. Use os botões para <strong>negrito</strong>, <em>itálico</em> e formatação. O resultado aparece na hora.</p>
+                <input type="hidden" name="modo_preparo" id="modo_preparo">
+                <div id="modo-preparo-editor" class="min-h-[200px] rounded-lg border border-gray-300 bg-white text-gray-900" style="height: 240px;"></div>
+            </div>
+            <div>
+                <label for="imagem_destaque" class="block text-sm font-medium text-gray-700 mb-1">Imagem de destaque <span class="text-red-600">*</span></label>
+                <input type="file" id="imagem_destaque" name="imagem_destaque" accept=".png,.jpg,.jpeg,.gif,.webp" required
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 file:mr-3 file:rounded-lg file:border-0 file:bg-[#000545] file:px-4 file:py-2 file:text-white file:text-sm file:font-medium hover:file:bg-[#000435] focus:border-[#000545] focus:outline-none focus:ring-2 focus:ring-[#000545]/30">
+                <p class="mt-1 text-xs text-gray-500">Obrigatório. Formatos: PNG, JPG, JPEG, GIF, WEBP. Será exibida na listagem, na página da receita e no admin.</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Vídeo da receita (opcional)</label>
+                <p class="text-xs text-gray-500 mb-2">Envie um arquivo do computador ou cole um link (YouTube/Vimeo).</p>
+                <input type="file" id="video_destaque" name="video_destaque" accept="video/mp4,video/webm,video/quicktime,video/ogg"
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 file:mr-3 file:rounded-lg file:border-0 file:bg-[#000545] file:px-4 file:py-2 file:text-white file:text-sm file:font-medium hover:file:bg-[#000435] focus:border-[#000545] focus:outline-none focus:ring-2 focus:ring-[#000545]/30 mb-2">
+                <input type="url" id="video_url" name="video_url" placeholder="Ou cole o link: https://www.youtube.com/watch?v=..."
+                    class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-900 focus:border-[#000545] focus:outline-none focus:ring-2 focus:ring-[#000545]/30">
+                <p class="mt-1 text-xs text-gray-500">Arquivo: MP4, WEBM, MOV, OGG. Link: YouTube ou Vimeo. Máx. 100 MB.</p>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <a href="{{ url_for('admin_receitas') }}" class="text-sm font-medium text-gray-600 hover:text-gray-800">Cancelar</a>
+                <button type="submit" class="rounded-lg bg-[#000545] px-5 py-2.5 font-semibold text-white hover:bg-[#000435] focus:outline-none focus:ring-2 focus:ring-[#000545] focus:ring-offset-2">
+                    Publicar receita
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+(function() {
+    var toolbar = [['bold', 'italic', 'underline'], [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['clean']];
+    var quillConteudo = new Quill('#conteudo-editor', {
+        theme: 'snow',
+        placeholder: 'Considerações sobre o prato (opcional)...',
+        modules: { toolbar: toolbar }
+    });
+    var quillModo = new Quill('#modo-preparo-editor', {
+        theme: 'snow',
+        placeholder: 'Digite o passo a passo da receita...',
+        modules: { toolbar: toolbar }
+    });
+    document.querySelector('form').addEventListener('submit', function() {
+        document.getElementById('conteudo').value = quillConteudo.root.innerHTML;
+        document.getElementById('modo_preparo').value = quillModo.root.innerHTML;
+    });
+})();
+</script>
+{% endblock %}
+
